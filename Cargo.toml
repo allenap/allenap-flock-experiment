@@ -1,0 +1,8 @@
+[package]
+name = "lockfun"
+version = "0.1.0"
+authors = ["Gavin Panella <gavinpanella@gmail.com>"]
+
+[dependencies]
+nix = "~0.8"
+getch = "~0.1.1"
