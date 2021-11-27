@@ -5,6 +5,7 @@ description = "Interactive command-line tool to experiment with `flock(2)` locks
 edition = "2021"
 license = "MIT"
 name = "allenap-flock-experiment"
+repository = "https://github.com/allenap/allenap-flock-experiment"
 version = "0.1.0"
 
 [dependencies]
