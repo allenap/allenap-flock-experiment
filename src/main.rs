@@ -9,7 +9,7 @@ use nix::fcntl::{flock,FlockArg};
 fn main() {
     let file = File::create("LOCK").unwrap();
     let fd = file.as_raw_fd();
-    let getter = getch::Getch::new().unwrap();
+    let getter = getch::Getch::new();
     loop {
         match getter.getch().unwrap() as char {
             's' => {
