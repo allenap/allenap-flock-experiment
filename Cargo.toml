@@ -1,7 +1,11 @@
 [package]
+authors = ["Gavin Panella <gavinpanella@gmail.com>"]
+categories = ["development-tools", "command-line-utilities"]
+description = "Interactive command-line tool to experiment with `flock(2)` locks"
+edition = "2021"
+license = "MIT"
 name = "lockfun"
 version = "0.1.0"
-authors = ["Gavin Panella <gavinpanella@gmail.com>"]
 
 [dependencies]
 getch = "0.2.1"
