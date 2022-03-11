@@ -10,5 +10,5 @@ repository = "https://github.com/allenap/allenap-flock-experiment"
 version = "0.1.0"
 
 [dependencies]
-getch = "0.2.1"
-nix = "0.23.0"
+getch = "0.3.1"
+nix = "0.23.1"
