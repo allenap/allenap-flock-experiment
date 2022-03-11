@@ -68,7 +68,7 @@ static HELP_KEY_BINDINGS: &str = concat!(
     "  x - to acquire an exclusive lock\n",
     "  X - to acquire an exclusive lock without blocking\n",
     "  u - to unlock\n",
-    "  u - to unlock without blocking\n",
+    "  U - to unlock without blocking\n",
     "  q - to quit.\n",
     "  h or ? - for help.\n",
 );

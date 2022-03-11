@@ -23,7 +23,7 @@ Experiment with flock(2) on a file named `LOCK` in the current directory. Try:
   x - to acquire an exclusive lock
   X - to acquire an exclusive lock without blocking
   u - to unlock
-  u - to unlock without blocking
+  U - to unlock without blocking
   q - to quit.
   h or ? - for help.
 
