@@ -9,10 +9,10 @@ hands-on experience with it when [writing about `flock` in 2017][flock-post].
 
 ## Command-line utility
 
-If you have [installed Cargo][install-cargo], you can install
-allenap-flock-experiment with `cargo install postgresfixture`. This puts a
-`allenap-flock-experiment` binary in `~/.cargo/bin`, which the Cargo
-installation process will probably have added to your `PATH`.
+If you have installed Cargo, you can install allenap-flock-experiment with
+`cargo install postgresfixture`. This puts a `allenap-flock-experiment` binary
+in `~/.cargo/bin`, which the Cargo installation process will probably have added
+to your `PATH`.
 
 ```shellsession
 $ allenap-flock-experiment
