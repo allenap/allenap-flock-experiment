@@ -1,17 +1,12 @@
 extern crate getch;
 extern crate nix;
 
-use nix::fcntl::{flock, FlockArg};
+use nix::fcntl::{flock, FlockArg, FlockArg::*};
 use std::fs::File;
 use std::os::unix::io::AsRawFd;
 
 fn main() {
-    let file = File::create("LOCK").unwrap();
-    let fd = file.as_raw_fd();
-    let lock = |mode: FlockArg, message: &str| match flock(fd, mode) {
-        Ok(_) => println!("-> {}", message),
-        Err(err) => eprintln!("-> FAILED: ${:?}", err),
-    };
+    let mut file: Option<File> = None;
 
     println!(
         "Experiment with flock(2) on a file named `LOCK` in the current directory. Try:\n\n{}",
@@ -21,29 +16,46 @@ fn main() {
     let getter = getch::Getch::new();
     loop {
         match getter.getch().unwrap() as char {
+            'o' => {
+                println!("Opening lock file...");
+                match File::create("LOCK") {
+                    Ok(f) => match file.replace(f) {
+                        Some(_) => println!("-> Reopened lock file"),
+                        None => println!("-> Opened lock file"),
+                    },
+                    Err(err) => eprintln!("-> FAILED: ${:?}", err),
+                }
+            }
+            'c' => {
+                println!("Closing lock file...");
+                match file.take() {
+                    Some(_) => println!("-> Closed lock file"),
+                    None => println!("-> Lock file already closed"),
+                }
+            }
             's' => {
                 println!("Obtaining shared lock...");
-                lock(FlockArg::LockShared, "Obtained shared lock.")
+                lock(&file, LockShared, "Obtained shared lock.")
             }
             'S' => {
                 println!("Obtaining shared lock... (non-blocking)");
-                lock(FlockArg::LockSharedNonblock, "Obtained shared lock.");
+                lock(&file, LockSharedNonblock, "Obtained shared lock.");
             }
             'x' => {
                 println!("Obtaining exclusive lock...");
-                lock(FlockArg::LockExclusive, "Obtained exclusive lock.");
+                lock(&file, LockExclusive, "Obtained exclusive lock.");
             }
             'X' => {
                 println!("Obtaining exclusive lock... (non-blocking)");
-                lock(FlockArg::LockExclusiveNonblock, "Obtained exclusive lock.");
+                lock(&file, LockExclusiveNonblock, "Obtained exclusive lock.");
             }
             'u' => {
                 println!("Unlocking...");
-                lock(FlockArg::Unlock, "Unlocked.");
+                lock(&file, Unlock, "Unlocked.");
             }
             'U' => {
                 println!("Unlocking... (non-blocking)");
-                lock(FlockArg::UnlockNonblock, "Unlocked.");
+                lock(&file, UnlockNonblock, "Unlocked.");
             }
             'q' => {
                 println!("Bye.");
@@ -62,7 +74,21 @@ fn main() {
     }
 }
 
+fn lock(file: &Option<File>, mode: FlockArg, message: &str) {
+    match file {
+        Some(f) => match flock(f.as_raw_fd(), mode) {
+            Ok(_) => println!("-> {}", message),
+            Err(err) => eprintln!("-> FAILED: ${:?}", err),
+        },
+        None => {
+            eprintln!("-> FAILED: Lock file is not open")
+        }
+    };
+}
+
 static HELP_KEY_BINDINGS: &str = concat!(
+    "  o – to open the lock file (do this first)\n",
+    "  c – to close the lock file\n",
     "  s – to acquire a shared lock\n",
     "  S – to acquire a shared lock without blocking\n",
     "  x - to acquire an exclusive lock\n",

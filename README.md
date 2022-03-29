@@ -18,6 +18,8 @@ to your `PATH`.
 $ allenap-flock-experiment
 Experiment with flock(2) on a file named `LOCK` in the current directory. Try:
 
+  o – to open the lock file (do this first)
+  c – to close the lock file
   s – to acquire a shared lock
   S – to acquire a shared lock without blocking
   x - to acquire an exclusive lock
@@ -27,6 +29,8 @@ Experiment with flock(2) on a file named `LOCK` in the current directory. Try:
   q - to quit.
   h or ? - for help.
 
+Opening lock file...
+-> Opened lock file
 Obtaining shared lock...
 -> Obtained shared lock.
 Obtaining exclusive lock...
@@ -36,7 +40,7 @@ Unlocking...
 Bye.
 ```
 
-Above, I pressed the keys `s`, `x`, `u`, then `q` to exit.
+Above, I pressed the keys `o`, `s`, `x`, `u`, then `q` to exit.
 
 That's all there is to it. However, it's more interesting to run it in a second
 terminal at the same time, or even in a third. This should give you an idea of
